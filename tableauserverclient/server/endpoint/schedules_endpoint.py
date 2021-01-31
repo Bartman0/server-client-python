@@ -53,7 +53,7 @@ class Schedules(Endpoint):
 
     @api(version="2.3")
     def create(self, schedule_item):
-        if schedule_item.interval_item is None:
+        if schedule_item._interval_item is None:
             error = "Interval item must be defined."
             raise MissingRequiredFieldError(error)
 

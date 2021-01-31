@@ -373,7 +373,7 @@ class ScheduleRequest(object):
         schedule_element.attrib['priority'] = str(schedule_item.priority)
         schedule_element.attrib['type'] = schedule_item.schedule_type
         schedule_element.attrib['executionOrder'] = schedule_item.execution_order
-        interval_item = schedule_item.interval_item
+        interval_item = schedule_item._interval_item
         schedule_element.attrib['frequency'] = interval_item._frequency
         frequency_element = ET.SubElement(schedule_element, 'frequencyDetails')
         frequency_element.attrib['start'] = str(interval_item.start_time)
@@ -399,7 +399,7 @@ class ScheduleRequest(object):
         if schedule_item.state:
             schedule_element.attrib['state'] = schedule_item.state
 
-        interval_item = schedule_item.interval_item
+        interval_item = schedule_item._interval_item
         if interval_item is not None:
             if interval_item._frequency:
                 schedule_element.attrib['frequency'] = interval_item._frequency

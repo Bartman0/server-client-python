@@ -107,9 +107,9 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(TSC.ScheduleItem.Type.Extract, new_schedule.schedule_type)
         self.assertEqual("2016-09-16T01:30:00Z", format_datetime(new_schedule.next_run_at))
         self.assertEqual(TSC.ScheduleItem.ExecutionOrder.Parallel, new_schedule.execution_order)
-        self.assertEqual(time(2, 30), new_schedule.interval_item.start_time)
-        self.assertEqual(time(23), new_schedule.interval_item.end_time)
-        self.assertEqual("8", new_schedule.interval_item.interval)
+        self.assertEqual(time(2, 30), new_schedule._interval_item.start_time)
+        self.assertEqual(time(23), new_schedule._interval_item.end_time)
+        self.assertEqual("8", new_schedule._interval_item.interval)
 
     def test_create_daily(self):
         with open(CREATE_DAILY_XML, "rb") as f:
@@ -130,7 +130,7 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(TSC.ScheduleItem.Type.Subscription, new_schedule.schedule_type)
         self.assertEqual("2016-09-16T11:45:00Z", format_datetime(new_schedule.next_run_at))
         self.assertEqual(TSC.ScheduleItem.ExecutionOrder.Serial, new_schedule.execution_order)
-        self.assertEqual(time(4, 45), new_schedule.interval_item.start_time)
+        self.assertEqual(time(4, 45), new_schedule._interval_item.start_time)
 
     def test_create_weekly(self):
         with open(CREATE_WEEKLY_XML, "rb") as f:
@@ -153,9 +153,9 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(TSC.ScheduleItem.Type.Extract, new_schedule.schedule_type)
         self.assertEqual("2016-09-16T16:15:00Z", format_datetime(new_schedule.next_run_at))
         self.assertEqual(TSC.ScheduleItem.ExecutionOrder.Parallel, new_schedule.execution_order)
-        self.assertEqual(time(9, 15), new_schedule.interval_item.start_time)
+        self.assertEqual(time(9, 15), new_schedule._interval_item.start_time)
         self.assertEqual(("Monday", "Wednesday", "Friday"),
-                         new_schedule.interval_item.interval)
+                         new_schedule._interval_item.interval)
         self.assertEqual(2, len(new_schedule.warnings))
         self.assertEqual("warning 1", new_schedule.warnings[0])
         self.assertEqual("warning 2", new_schedule.warnings[1])
@@ -179,8 +179,8 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(TSC.ScheduleItem.Type.Extract, new_schedule.schedule_type)
         self.assertEqual("2016-10-12T14:00:00Z", format_datetime(new_schedule.next_run_at))
         self.assertEqual(TSC.ScheduleItem.ExecutionOrder.Serial, new_schedule.execution_order)
-        self.assertEqual(time(7), new_schedule.interval_item.start_time)
-        self.assertEqual("12", new_schedule.interval_item.interval)
+        self.assertEqual(time(7), new_schedule._interval_item.start_time)
+        self.assertEqual("12", new_schedule._interval_item.interval)
 
     def test_update(self):
         with open(UPDATE_XML, "rb") as f:
@@ -202,9 +202,9 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(TSC.ScheduleItem.Type.Extract, single_schedule.schedule_type)
         self.assertEqual("2016-09-16T14:00:00Z", format_datetime(single_schedule.next_run_at))
         self.assertEqual(TSC.ScheduleItem.ExecutionOrder.Parallel, single_schedule.execution_order)
-        self.assertEqual(time(7), single_schedule.interval_item.start_time)
+        self.assertEqual(time(7), single_schedule._interval_item.start_time)
         self.assertEqual(("Monday", "Friday"),
-                         single_schedule.interval_item.interval)
+                         single_schedule._interval_item.interval)
         self.assertEqual(TSC.ScheduleItem.State.Suspended, single_schedule.state)
 
     # Tests calling update with a schedule item returned from the server

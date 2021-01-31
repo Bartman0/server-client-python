@@ -28,7 +28,7 @@ class ScheduleItem(object):
         self._next_run_at = None
         self._state = None
         self._updated_at = None
-        self.interval_item = interval_item
+        self._interval_item = interval_item
         self.execution_order = execution_order
         self.name = name
         self.priority = priority
@@ -66,6 +66,13 @@ class ScheduleItem(object):
     @property_not_nullable
     def name(self, value):
         self._name = value
+
+    @interval_item.setter
+    @property_not_nullable
+    def interval_item(self, value):
+        if not isinstance(value, IntervalItem):
+            raise ValueError("Value is not an IntervalItem, cannot update interval_item")
+        self._interval_item = value
 
     @property
     def next_run_at(self):
